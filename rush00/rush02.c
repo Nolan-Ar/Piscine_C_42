@@ -56,13 +56,15 @@ void	print_row(int x)
 
 void	rush(int x, int y)
 {
-	int	i;
+    int	i;
 
-	i = 0;
-	while (i < y)
-	{
-		if (i == 0)
-			print_first_row(x);
+    if (x <= 0 || y <= 0)
+        return ;
+    i = 0;
+    while (i < y)
+    {
+        if (i == 0)
+            print_first_row(x);
 		else if ((i + 1) == y)
 			print_last_row(x);
 		else

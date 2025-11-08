@@ -1,18 +1,15 @@
 #include "libft.h"
+#include <stdlib.h>
 
 int	is_safe_data(int **board, int *data, int size, int row)
 {
-	if (row == 1 && safe_row_start(board, data, size) == 0)
-		return (0);
-	if (row == size - 2 && safe_row_end(board, data, size) == 0)
-		return (0);
-	if (safe_col_start(board, data, size, row) == 0)
-		return (0);
-	if (safe_col_end(board, data, size, row) == 0)
-		return (0);
-	if (row > 1 && safe_up(board, data, size, row) == 0)
-		return (0);
-	return (1);
+    if (safe_col_start(board, data, size, row) == 0)
+        return (0);
+    if (safe_col_end(board, data, size, row) == 0)
+        return (0);
+    if (row > 1 && safe_up(board, data, size, row) == 0)
+        return (0);
+    return (1);
 }
 
 int	safe_total_col_up(int **board, int size, int col)
@@ -89,29 +86,52 @@ int	recursive_resolv_puzzle(int **board, int **data, int size, int row)
 		print_board_resolv(board, size);
 		return (1);
 	}
-	while (i < j)
-	{
-		if (is_safe_data(board, data[i], size, row) == 1)
-		{
-			cpy_board_data(board, data[i], size, row);
-			recursive_resolv_puzzle(board, data, size, row + 1);
-		}
-		i++;
-	}
-	return (0);
+    while (i < j)
+    {
+        if (is_safe_data(board, data[i], size, row) == 1)
+        {
+            cpy_board_data(board, data[i], size, row);
+            if (safe_cols_partial(board, size, row) == 1
+                && recursive_resolv_puzzle(board, data, size, row + 1) == 1)
+                return (1);
+        }
+        i++;
+    }
+    return (0);
 }
 
 int main(int argc, char **argv)
 {
-	int	**board;
-	int	**data;
-	int	size;
+    int	**board;
+    int	**data;
+    int	base_size;
+    int	size;
 
-	argc = 1;
-	size = size_tab_argv(argv[argc]) + 2;
-	data = tab_facto(size - 2);
-	board = creat_board(argv[argc]);
-	recursive_resolv_puzzle(board, data, size, argc);
-	
-	return (0);
+    if (argc != 2)
+    {
+        write(1, "Error\n", 6);
+        return (1);
+    }
+    base_size = size_tab_argv(argv[1]);
+    if (base_size <= 0 || base_size > 9)
+    {
+        write(1, "Error\n", 6);
+        return (1);
+    }
+    size = base_size + 2;
+    data = tab_facto(base_size);
+    if (!data)
+    {
+        write(1, "Error\n", 6);
+        return (1);
+    }
+    board = creat_board(argv[1]);
+    if (!board)
+    {
+        write(1, "Error\n", 6);
+        return (1);
+    }
+    if (!recursive_resolv_puzzle(board, data, size, 1))
+        write(1, "Error\n", 6);
+    return (0);
 }

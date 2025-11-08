@@ -8,6 +8,8 @@ int     main(int argc, char **argv)
 {
         char    *src;
 
+        src = NULL;
+
         if (argc == 2)
         {
                 if (ft_str_is_numeric(argv[1]) != 0)
@@ -16,6 +18,11 @@ int     main(int argc, char **argv)
                         return (1);
                 }
                 src = read_files("numbers.dict");
+                if (!src)
+                {
+                        ft_puterr("Dict Error\n");
+                        return (1);
+                }
                 ft_start_prog(src, argv[1]);
         }
         else if (argc == 3)
@@ -26,9 +33,15 @@ int     main(int argc, char **argv)
                         return (1);
                 }
                 src = read_files(argv[1]);
+                if (!src)
+                {
+                        ft_puterr("Dict Error\n");
+                        return (1);
+                }
                 ft_start_prog(src, argv[2]);
         }
         ft_putstr("\n");
-        free(src);
+        if (src)
+                free(src);
         return (0);
 }

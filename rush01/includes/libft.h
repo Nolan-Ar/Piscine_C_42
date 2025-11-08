@@ -3,7 +3,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 
 void	chang_board(int **board, int *tab, int size);
 void	creat_base_tab(int *tab, int n);
@@ -22,6 +21,7 @@ int	safe_row_end(int **board, int *data, int size);
 int	safe_col_start(int **board, int *data, int size, int row);
 int	safe_col_end(int **board, int *data, int size, int row);
 int	safe_up(int **board, int *data, int size, int row);
+int	safe_cols_partial(int **board, int size, int row);
 int	ft_recursive_factorial(int nb);
 
 #endif

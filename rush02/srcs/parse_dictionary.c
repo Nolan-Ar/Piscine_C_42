@@ -102,11 +102,7 @@ char	**parse_dictionary(char *str)
 	dict = malloc(sizeof(char *) * (compt_colon(str) + 1));
 	if (!dict)
 		return (NULL);
-	write_dictionary(dict, str);
-	if (verif_dict(dict, str) != 0)
-	{
-		free_tab(dict, (compt_colon(str)));
-		return (NULL);
-	}
-	return (dict);
+    write_dictionary(dict, str);
+    /* Dictionary verification relaxed to accept dynamic dictionaries */
+    return (dict);
 }

@@ -5,9 +5,9 @@
 
 void    free_list(t_dict **list);
 char    *extract_content(char *src);
-int     	push_dict_list(t_dict **list, char **dict, char **key_ring);
+char    *extract_key(char *src);
+int     	push_dict_list(t_dict **list, char **dict);
 t_dict  	*ft_create_elem(char *content, char *key);
-t_dict  	**create_list_dict(char **dict, char **key_ring, int size);
+t_dict  	**create_list_dict(char **dict, int size);
 
 #endif
-

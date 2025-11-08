@@ -30,8 +30,8 @@ int     size_absolute_input(char *src)
                 return (1);
         while (dest[i])
         {
-		if (dest[i] != '0')
-                	count += absolute_inp(i, dest);
+                if (dest[i] != '0' || (i % 3 == 2))
+                        count += absolute_inp(i, dest);
                 i++;
         }
         free(dest);
@@ -48,16 +48,14 @@ char    *write_higt_numbers(int size)
         char    *dest;
         int     i;
 
-        i = 1;
-        dest = malloc(sizeof(char) * (size + 1));
+        /* size represents the number of zeros to append */
+        dest = malloc(sizeof(char) * (size + 2));
         if (!dest)
                 return (NULL);
-        dest[0] = '1';
-        while (i < size)
-        {
-                dest[i] = '0';
-                i++;
-        }
+        i = 0;
+        dest[i++] = '1';
+        while (size-- > 0)
+                dest[i++] = '0';
         dest[i] = '\0';
         return (dest);
 }

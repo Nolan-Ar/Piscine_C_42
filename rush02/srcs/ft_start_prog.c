@@ -19,7 +19,6 @@ void    print_zero(t_dict **dict, char *src, int (*cmp)(char *s1, char *s2))
                 if ((cmp)(current->key, src) == 0)
                 {
                         ft_putstr(current->content);
-			ft_putstr(".");
                         return ;
                 }
                 current = current->next;
@@ -29,20 +28,22 @@ void    print_zero(t_dict **dict, char *src, int (*cmp)(char *s1, char *s2))
 int     size_compare(t_dict **dict, char *argv, int (*f)(char *str))
 {
         t_dict  *current;
+        int     max_len;
 
+        max_len = 0;
         current = *dict;
-        while(current != NULL)
+        while (current != NULL)
         {
-                if (current->next == NULL)
-                {
-                        if ((f)(argv) > ((f)(current->key) + 2))
-                        {
-                                free_list(dict);
-                                ft_puterr("Error");
-                                return (1);
-                        }
-                }
+                int klen = (f)(current->key);
+                if (klen > max_len)
+                        max_len = klen;
                 current = current->next;
+        }
+        if ((f)(argv) > max_len)
+        {
+                free_list(dict);
+                ft_puterr("Error\n");
+                return (1);
         }
         return (0);
 }
@@ -54,20 +55,17 @@ void    ft_process(t_dict **dict, char **parse)
         i = 0;
         while (parse[i] != NULL)
         {
-		print_list(dict, parse, i, ft_strcmp);
+                print_list(dict, parse, i, ft_strcmp);
                 i++;
         }
-        ft_putstr(".");
 }
-
-#include <stdio.h>
 
 int	ft_start_prog(char *src, char *argv)
 {
 	t_dict	**dict;
 	char	**parse;
 
-	dict = init_list(src);
+    dict = init_list(src);
 	if (!dict)
 		return (1);
 	if (size_compare(dict, argv, ft_strlen) != 0)
@@ -84,10 +82,13 @@ int	ft_start_prog(char *src, char *argv)
 		free_list(dict);
 		return (1);
 	}
-	for (int i = 0 ; parse[i] != NULL ; i++)
-		printf("%s\n", parse[i]);
-	ft_process(dict, parse);
-	free_list(dict);
-	free_tab(parse, size_absolute_input(argv));
-	return (0);
+    ft_process(dict, parse);
+    free_list(dict);
+    {
+        int k = 0;
+        while (parse[k])
+            k++;
+        free_tab(parse, k);
+    }
+    return (0);
 }

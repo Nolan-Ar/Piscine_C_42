@@ -2,7 +2,6 @@
 #include "ft_utils.h"
 #include "ft_utils_convert.h"
 #include "ft_struct_dict.h"
-#include "ft_keys_ring.h"
 #include "parse_dictionary.h"
 
 
@@ -34,7 +33,7 @@ void     print_ponctuation(int index, char **parse, char *content)
         }
         if (ft_strcmp(parse[index], "100") == 0 && parse[index + 1] != NULL)
 	{
-                ft_putstr(", ");
+                ft_putstr(" ");
 		return ;
 	}
 	if (parse[index + 1] != NULL)
@@ -62,22 +61,13 @@ t_dict	**init_list(char *src)
 {
 	t_dict	**list;
 	char		**dict;
-	char		**keys;
 	int	len;
 
 	len = compt_colon(src);
 	dict = 	parse_dictionary(src);
 	if (!dict)
 		return (NULL);
-	keys = create_keys_ring(len);
-	if (!keys)
-	{
-		free_tab(dict, len);
-		free_tab(keys, len);
-		return (NULL);
-	}
-	list = create_list_dict(dict, keys, len);
-	free_tab(keys, len);
+	list = create_list_dict(dict, len);
 	free_tab(dict, len);
 	return (list);
 }

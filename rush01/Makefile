@@ -7,7 +7,7 @@ SCRS = srcs/creat_base_tab.c srcs/ft_rev_int_tab.c srcs/safe_col_start.c srcs/se
        srcs/true_char.c srcs/chang_board.c srcs/creat_board.c srcs/main.c srcs/safe_row_end.c \
        srcs/size_tab_argv.c srcs/ft_putchar.c srcs/print_board_resolv.c srcs/safe_row_start.c \
        srcs/tab_cpy.c srcs/cpy_board_data.c srcs/safe_col_end.c srcs/safe_up.c \
-       srcs/tab_facto.c srcs/ft_recursive_factorial.c
+       srcs/tab_facto.c srcs/ft_recursive_factorial.c srcs/safe_cols_partial.c
 
 OBJS = ${SCRS:.c=.o}
 
@@ -31,5 +31,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-
 

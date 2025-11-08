@@ -21,3 +21,4 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 	dest[len_dest + i] = '\0';
 	return (len_dest + len_src);
 }
+

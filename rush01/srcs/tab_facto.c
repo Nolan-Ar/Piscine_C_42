@@ -1,73 +1,83 @@
+/* Robust permutation generator for 1..n */
+#include <stdlib.h>
 #include "libft.h"
 
-void	chang_tab(int *tab, int n)
+static void fill_base(int *arr, int n)
 {
-	int	i;
-
-	i = tab[n];
-	tab[n] = tab[n + 1];
-	tab[n + 1] = i;
+    int i = 0;
+    while (i < n)
+    {
+        arr[i] = i + 1;
+        i++;
+    }
 }
 
-void	chang_base_tab(int *tab, int index)
+static void copy_row(int *dst, int *src, int n)
 {
-	int	i;
-
-	i = tab[0];
-	tab[0] = tab[index];
-	tab[index] = i;
+    int i = 0;
+    while (i < n)
+    {
+        dst[i] = src[i];
+        i++;
+    }
 }
 
-void	write_tab_facto(int **tab, int n)
+static int next_permutation(int *a, int n)
 {
-	int	i;
-	int	j;
-	int	k;
-	int	l;
-
-	i = 1;
-	k = 2;
-	l = 1;
-	j = ft_recursive_factorial(n) / n;
-	creat_base_tab(tab[0], n);
-	while (i < ft_recursive_factorial(n))
-	{
-		if (k == n - 1)
-			k = 1;
-		tab_cpy(tab[i], tab[i - 1], n);
-		chang_tab(tab[i], k);
-		if (i == j)
-		{
-			chang_base_tab(tab[i], l);
-			j += ft_recursive_factorial(n) / n;
-			l++;
-		}
-		k++;
-		i++;
-	}
+    int i = n - 2;
+    int j, t, l, r;
+    while (i >= 0 && a[i] >= a[i + 1])
+        i--;
+    if (i < 0)
+        return 0;
+    j = n - 1;
+    while (a[j] <= a[i])
+        j--;
+    t = a[i]; a[i] = a[j]; a[j] = t;
+    l = i + 1; r = n - 1;
+    while (l < r)
+    {
+        t = a[l]; a[l] = a[r]; a[r] = t;
+        l++; r--;
+    }
+    return 1;
 }
 
 int	**tab_facto(int n)
 {
-	int	**tab;
-	int	i;
+    int **tab;
+    int total;
+    int i;
+    int *curr;
 
-	i = 0;
-	tab = (int **)malloc(ft_recursive_factorial(n) * sizeof(int *));
-	if (!tab)
-		return (NULL);
-	while (i < ft_recursive_factorial(n))
-	{
-		tab[i] = (int *)malloc(n * sizeof(int));
-		if (!tab[i])
-		{
-			while(i--)
-				free(tab[i]);
-			free(tab);
-			return (NULL);
-		}
-		i++;
-	}
-	write_tab_facto(tab, n);
-	return (tab);
+    total = ft_recursive_factorial(n);
+    tab = (int **)malloc(sizeof(int *) * total);
+    if (!tab)
+        return (NULL);
+    curr = (int *)malloc(sizeof(int) * n);
+    if (!curr)
+    {
+        free(tab);
+        return (NULL);
+    }
+    fill_base(curr, n);
+    i = 0;
+    while (i < total)
+    {
+        tab[i] = (int *)malloc(sizeof(int) * n);
+        if (!tab[i])
+        {
+            while (i-- > 0)
+                free(tab[i]);
+            free(tab);
+            free(curr);
+            return (NULL);
+        }
+        copy_row(tab[i], curr, n);
+        if (i < total - 1 && !next_permutation(curr, n))
+            break;
+        i++;
+    }
+    free(curr);
+    return tab;
 }

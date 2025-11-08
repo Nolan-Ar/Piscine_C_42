@@ -13,14 +13,14 @@ int	*seed_tab(char *src)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (i < count)
-	{
-		if (src[j] >= 48 && src[j] <= 57)
-		{
-			t_seed[i] = src[j] % 8;
-			i++;
-		}
-		j++;
-	}
+    while (i < count)
+    {
+        if (src[j] >= '0' && src[j] <= '9')
+        {
+            t_seed[i] = src[j] - '0';
+            i++;
+        }
+        j++;
+    }
 	return (t_seed);
 }

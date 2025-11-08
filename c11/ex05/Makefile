@@ -1,6 +1,6 @@
-NAME = do-po
+NAME = do-op
 
-SRC = do-po.c ft_add.c ft_div.c ft_less.c ft_mult.c ft_mod.c ft_atoi.c ft_putnbr.c
+SRC = do-op.c ft_add.c ft_div.c ft_less.c ft_mult.c ft_mod.c ft_atoi.c ft_putnbr.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -26,3 +26,4 @@ re: fclean all
 
 
 .PHONY: all clean fclean re
+

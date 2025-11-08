@@ -6,18 +6,19 @@ int	safe_col_end(int **board, int *data, int size, int row)
 	int	j;
 	int	count;
 
-	i = size - 2;
-	j = 0;
-	count = 0;
-	while (i >= 0)
-	{
-		if (data[i] > j)
-		{
-			j = data[i];
-			count++;
-		}
-		i--;
-	}
+    /* data has length (size - 2); start at last index */
+    i = size - 3;
+    j = 0;
+    count = 0;
+    while (i >= 0)
+    {
+        if (data[i] > j)
+        {
+            j = data[i];
+            count++;
+        }
+        i--;
+    }
 	if (count == board[row][size - 1])
 		return (1);
 	return (0);
