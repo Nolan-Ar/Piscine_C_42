@@ -24,8 +24,3 @@ void	ft_putnbr(int n)
 	}
 	ft_putchar(n % 10 + '0');
 }
-
-int	main(void)
-{
-	ft_putnbr(-2147483648);
-}

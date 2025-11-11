@@ -68,7 +68,7 @@ int	s_spl(int index, char *str, char *charset)
 	}
 	if (size == 0)
 		return (i - index + 1);
-	return (size - (ft_stelen(charset) + index) + 1);
+	return (size - (ft_strlen(charset) + index) + 1);
 }
 
 int	strscpy(int index, char *dest, char *str, char *charset)
@@ -112,6 +112,6 @@ char	**ft_split(char *str, char *charset)
 		i = strscpy(i, split[j], str, charset);
 		j++;
 	}
-	split[j] = '\0';
+	split[j] = NULL;
 	return (split);
 }

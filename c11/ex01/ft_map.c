@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_map(int *tab, int length, int (*f)(int))
+#include <stdlib.h>
+
+int	*ft_map(int *tab, int length, int (*f)(int))
 {
 	int	*res;
 	int	i;
