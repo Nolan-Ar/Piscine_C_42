@@ -18,7 +18,7 @@ int	**creat_board(char *src)
 		board[i] = (int *)malloc(size * sizeof(int));
 		if (board[i] == NULL)
 		{
-			while(i-- > 0)
+			while (i-- > 0)
 				free (board[i]);
 			free (board);
 			return (NULL);

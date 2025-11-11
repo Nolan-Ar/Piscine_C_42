@@ -24,37 +24,52 @@ static int process_map_buffer(const char *buf, int len, int print_sep)
 
 int main(int argc, char **argv)
 {
-    int status = 0;
+    int status;
+    int i;
+    int fd;
+    char *buf;
+    int len;
+
+    status = 0;
     if (argc <= 1)
     {
-        char *buf = NULL; int len = 0;
-        if (read_all_fd(0, &buf, &len) != 0) return 1;
+        buf = NULL;
+        len = 0;
+        if (read_all_fd(0, &buf, &len) != 0)
+            return (1);
         status |= process_map_buffer(buf, len, 0);
         free(buf);
-        return status ? 1 : 0;
+        return (status ? 1 : 0);
     }
-    for (int i = 1; i < argc; i++)
+    i = 1;
+    while (i < argc)
     {
-        int fd = open(argv[i], O_RDONLY);
+        fd = open(argv[i], O_RDONLY);
         if (fd < 0)
         {
             ft_putstr(2, "map error\n");
-            if (i < argc - 1) ft_putstr(1, "\n");
+            if (i < argc - 1)
+                ft_putstr(1, "\n");
             status = 1;
+            i++;
             continue;
         }
-        char *buf = NULL; int len = 0;
+        buf = NULL;
+        len = 0;
         if (read_all_fd(fd, &buf, &len) != 0)
         {
             close(fd);
             ft_putstr(2, "map error\n");
-            if (i < argc - 1) ft_putstr(1, "\n");
+            if (i < argc - 1)
+                ft_putstr(1, "\n");
             status = 1;
+            i++;
             continue;
         }
         close(fd);
         status |= process_map_buffer(buf, len, (i < argc - 1));
         free(buf);
+        i++;
     }
-    return status ? 1 : 0;
+    return (status ? 1 : 0);
 }

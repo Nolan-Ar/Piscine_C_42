@@ -2,12 +2,17 @@
 
 void print_map(const t_map *m)
 {
-    int cols = m->cols;
-    int rows = m->rows;
-    for (int r = 0; r < rows; r++)
+    int cols;
+    int rows;
+    int r;
+
+    cols = m->cols;
+    rows = m->rows;
+    r = 0;
+    while (r < rows)
     {
         write(1, m->grid + (r*cols), cols);
         write(1, "\n", 1);
+        r++;
     }
 }
-

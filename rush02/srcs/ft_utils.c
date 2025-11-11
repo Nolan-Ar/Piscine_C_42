@@ -28,7 +28,7 @@ char	*ft_strcat(char *dest, const char *src)
 		i++;
 	}
 	dest[j + i] = '\0';
-	return dest;
+	return (dest);
 }
 
 void	free_tab(char **tab, int size)

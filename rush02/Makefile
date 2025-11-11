@@ -1,6 +1,6 @@
 NAME = rush-02
 CC = gcc
-CCFLAGS = -Wall -Wextra -Werror -I includes -g3
+CCFLAGS = -Wall -Wextra -Werror -I includes
 
 
 SCRS = srcs/main.c srcs/ft_utils.c srcs/parse_dictionary.c srcs/verification_dictionary.c srcs/ft_utils_convert.c \

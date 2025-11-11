@@ -2,27 +2,56 @@
 
 int solve_bsq(t_map *m)
 {
-    int cols = m->cols;
-    int rows = m->rows;
-    int *dp = (int *)malloc(sizeof(int) * (cols + 1));
-    if (!dp) return 1;
-    for (int j = 0; j <= cols; j++) dp[j] = 0;
-    int max_sz = 0, max_r = 0, max_c = 0;
-    for (int r = 0; r < rows; r++)
+    int cols;
+    int rows;
+    int *dp;
+    int j;
+    int max_sz;
+    int max_r;
+    int max_c;
+    int r;
+    int prev_diag;
+    int c;
+    int temp;
+    int a;
+    int b;
+    int d;
+    int min;
+    int rr;
+    int cc;
+
+    cols = m->cols;
+    rows = m->rows;
+    dp = (int *)malloc(sizeof(int) * (cols + 1));
+    if (!dp)
+        return (1);
+    j = 0;
+    while (j <= cols)
     {
-        int prev_diag = 0; /* dp from previous row, previous column */
-        for (int c = 1; c <= cols; c++)
+        dp[j] = 0;
+        j++;
+    }
+    max_sz = 0;
+    max_r = 0;
+    max_c = 0;
+    r = 0;
+    while (r < rows)
+    {
+        prev_diag = 0;
+        c = 1;
+        while (c <= cols)
         {
-            int temp = dp[c]; /* save previous row dp(c) */
+            temp = dp[c];
             if (m->grid[r*cols + (c-1)] == m->obst)
                 dp[c] = 0;
             else
             {
-                int a = dp[c];      /* top */
-                int b = dp[c-1];    /* left */
-                int d = prev_diag;  /* top-left */
-                int min = a < b ? a : b;
-                if (d < min) min = d;
+                a = dp[c];
+                b = dp[c-1];
+                d = prev_diag;
+                min = a < b ? a : b;
+                if (d < min)
+                    min = d;
                 dp[c] = min + 1;
                 if (dp[c] > max_sz)
                 {
@@ -32,14 +61,24 @@ int solve_bsq(t_map *m)
                 }
             }
             prev_diag = temp;
+            c++;
         }
+        r++;
     }
     free(dp);
     if (max_sz > 0)
     {
-        for (int rr = max_r - max_sz + 1; rr <= max_r; rr++)
-            for (int cc = max_c - max_sz + 1; cc <= max_c; cc++)
+        rr = max_r - max_sz + 1;
+        while (rr <= max_r)
+        {
+            cc = max_c - max_sz + 1;
+            while (cc <= max_c)
+            {
                 m->grid[rr*cols + cc] = m->full;
+                cc++;
+            }
+            rr++;
+        }
     }
-    return 0;
+    return (0);
 }

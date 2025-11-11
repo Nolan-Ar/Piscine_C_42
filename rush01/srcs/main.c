@@ -69,7 +69,7 @@ int	safe_end(int **board, int size)
 	i = 0;
 	while (++i < size - 1)
 		if (safe_total_col_down(board, size, i) == 0)
-			return  (0);
+			return (0);
 	return (1);
 }
 	
