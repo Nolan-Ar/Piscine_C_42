@@ -30,6 +30,7 @@ void	ft_print_comb_recursive(int *tab, int n, int index, int start)
 			ft_putchar(',');
 			ft_putchar(' ');
 		}
+		return ;
 	}
 	while (i <= 9)
 	{

@@ -1,24 +1,29 @@
-int is_true(char *str, int n)
+int	is_alnum(char c)
 {
-    if (n == 0 || !(str[n - 1] >= 'a' && str[n - 1] <= 'z') &&
-        !(str[n - 1] >= 'A' && str[n - 1] <= 'Z') &&
-        !(str[n - 1] >= '0' && str[n - 1] <= '9'))
-    {
-        if (str[n] >= 'a' && str[n] <= 'z')
-            return (1);
-    }
-    return (0);
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }
 
 char	*ft_strcapitalize(char *str)
 {
 	int	i;
+	int	new_word;
 
 	i = 0;
+	new_word = 1;
 	while (str[i])
 	{
-		if (is_true(str, i) == 1)
+		if (new_word && str[i] >= 'a' && str[i] <= 'z')
 			str[i] -= 32;
+		else if (!new_word && str[i] >= 'A' && str[i] <= 'Z')
+			str[i] += 32;
+		if (is_alnum(str[i]))
+			new_word = 0;
+		else
+			new_word = 1;
 		i++;
 	}
 	return (str);
